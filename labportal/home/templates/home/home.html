@@ -1,11 +1,156 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
-{% block title %} Lab Portal | Home {% endblock %}
+{% block title %} Lab PortaL | Home {% endblock %}
 
 {% block content %}
+<!-- Intro section start -->
+<section id="intro">
+    <div class="container-lg">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-5 text-center text-md-start">
+                <h1>
+                    <div class="display-4">Lab Portal </div>
+                    <div class="lead my-4 text-muted">Gateway to your IT Career</div>
+                </h1>
+                <p class="lead my-4 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui,
+                    nobis.</p>
+                <button class="btn btn-primary btn-lg" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">All Computer Labs
+                </button>              
+            </div>
 
-<h1>Welcome to Lab Portal</h1>
+            <!-- Offcanvas - to pull from left side -->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header mt-2">
+                    <h5 class="offcanvas-title h3" id="offcanvasExampleLabel">Lab Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </div>
+                    <div class="dropdown mt-3">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            All labs
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Computer Center - I</a></li>
+                            <li><a class="dropdown-item" href="#">Programming Lab - I</a></li>
+                            <li><a class="dropdown-item" href="#">Programming Lab - II</a></li>
+                            <li><a class="dropdown-item" href="#">Digital Signal Processing Lab</a></li>
+                            <li><a class="dropdown-item" href="#">Project Lab - I</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Offcanvas ends -->
+
+            <div class="col-5 text-center d-none d-md-block">
+                <img class="img-fluid" src="{% static 'home/img/computer-lab.png' %}" alt="computer lab">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Intro section end -->
+
+<!-- Lab features section starts -->
+<section id="lab-features" class="border bg-secondary mt-5">
+    <div class="container-lg justify-content-center align-items-center">
+        <div class="text-center">
+            <h2>Lab Features                
+            </h2>
+            <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+        <div class="row my-5 justify-content-center align-items-center">
+            <div class="col-8 col-lg-4 col-xl-3">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <h4 class="card-title">Desktops</h4>
+                        <p class="lead card-subtitle">high end desktops</p>
+                        <p class="display-6 mt-4 text-primary">Hp - Dell Desktops</p>
+                        <p class="card-text text-muted d-none d-lg-block">Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 col-lg-4 col-xl-3">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <h4 class="card-title">Smart Board</h4>
+                        <p class="lead card-subtitle">high end touchscreen smartboard</p>
+                        <p class="display-6 mt-4 text-primary">Senses Smart Boards</p>
+                        <p class="card-text text-muted d-none d-lg-block">Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 col-lg-4 col-xl-3">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <h4 class="card-title">Networking</h4>
+                        <p class="lead card-subtitle">high speed networks</p>
+                        <p class="display-6 mt-4 text-primary">Cisco Network Devices</p>
+                        <p class="card-text text-muted d-none d-lg-block">Lorem ipsum, dolor sit amet consectetur
+                            adipisicing elit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Lab features section ends -->
+
+<!-- Contact form starts -->
+<section id="get-in-touch" class="bg-light">
+    <div class="container-lg">
+        <div class="text-center">
+            <h2>Get In Touch</h2>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 fs-5">
+                <form class="form-control p-4">
+                    <label class="form-label mt-2 mb-2" for="name">Name:</label>
+                    <div class="input-group">                        
+                        <input class="form-control" type="text" id="name" name="name" placeholder="e.g. John Doe">
+                    </div>
+
+                    <label class="form-label mt-2 mb-2" for="email">Email:</label>
+                    <div class="input-group">                        
+                        <input class="form-control" type="email" id="email" name="email"
+                            placeholder="e.g. john.doe@example.com">
+                    </div>
+
+                    <label for="subject" class="form-label mt-2 mb-2">What is your question about?</label>
+                    <div class="input-group">                        
+                        <select class="form-select" name="subject" id="subject">
+                            <option value="lab booking" selected>Lab booking</option>
+                            <option value="lab experiment">Lab experiments</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-4 mb-2 form-floating">
+                        <textarea name="query" id="query" class="form-control" style="height: 140px;"></textarea>
+                        <label for="query" class="text-muted">Type your query here ...</label>
+                    </div>
+
+
+                    <div class="mt-4 mb-2 text-center">
+                        <button class="btn btn-primary btn-lg form-control mt-2 mb-2 px-5"
+                            type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact form ends -->
 
 {% endblock %}
-
-
