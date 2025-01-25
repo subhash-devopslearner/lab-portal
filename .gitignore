@@ -172,4 +172,8 @@ cython_debug/
 
 # Added by me
 
+# Python virtual environment folder
 myprojectenv/
+
+# Media storage folder
+labportal/media/
