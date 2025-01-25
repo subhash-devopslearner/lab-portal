@@ -1,0 +1,16 @@
+{% extends "experiments/base.html" %}
+
+{% block title %}Experiments | Upload{% endblock %}
+
+{% block content %}
+<section id="exp-upload">
+  <div class="container-lg">
+    <h2>Upload Experiment</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>    
+
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.css' %}">
+    <style>
+      section {
+          padding: 60px 0;
+      }
+  </style>    
+  </head>
+  
+  <body>
+    <header>      
+      {% include 'experiments/navigation.html' %}
+    </header>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <footer>
+      {% include 'home/footer.html' %}
+    </footer>   
+    
+    <script src="{% static 'home/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

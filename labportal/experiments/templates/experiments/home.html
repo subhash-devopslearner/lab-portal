@@ -1,0 +1,46 @@
+{% extends "experiments/base.html" %}
+
+{% block title %}Experiments | Home{% endblock %}
+
+{% block content %}
+<section id="exp-search">
+  <div class="container-lg">
+    <h2>Experiment Lists</h2>
+    <form method="get">
+      {{ search_form.as_p }}
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</section>
+
+<section id="exp-lists">
+  <div class="container-lg">
+    <div class="row justify-content-center align-items-center">
+      <div class="col text-center text-md-start">
+        <table class="table table-hover border">
+          <thead>
+            <tr>
+              <th scope="col">AY</th>
+              <th scope="col">SEMESTER</th>
+              <th scope="col">SUBJECT</th>
+              <th scope="col">EXPERIMENT NO</th>
+              <th scope="col">ATTACHMENT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for experiment in experiments %}
+            <tr>
+              <td scope="row">{{experiment.academic_year.year}}</td>
+              <td scope="row">{{experiment.semester.name}}</td>
+              <td scope="row">{{experiment.subject.name}}</td>
+              <td scope="row">{{experiment.experiment_number}}</td>
+              <td scope="row"><a href="{{ experiment.file.url }}">Download</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
