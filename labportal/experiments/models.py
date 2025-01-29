@@ -25,6 +25,12 @@ class Programme(models.Model):
 
     def __str__(self):
         return self.name
+    
+def experiment_file_upload_to(instance, filename):
+    """
+    Dynamically set the upload path based on the instance's foreign key relationships.
+    """
+    return f"experiments/{instance.academic_year.year}/{instance.programme.name}/{instance.semester.name}/{instance.subject.name}/{filename}"
 
 class Experiment(models.Model):
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE)
@@ -32,7 +38,7 @@ class Experiment(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
     experiment_number = models.PositiveIntegerField()
-    file = models.FileField(upload_to="experiments/%Y/%m/%d/")  # Adjust path dynamically
+    file = models.FileField(upload_to=experiment_file_upload_to)  # Adjust path dynamically
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
