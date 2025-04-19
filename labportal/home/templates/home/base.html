@@ -19,14 +19,15 @@
   </style>    
   </head>
   
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <header>      
       {% include 'home/navigation.html' %}
     </header>
 
-    {% block content %}
-
-    {% endblock %}
+    <main class="flex-grow-1 py-4">
+      {% block content %}
+      {% endblock %}
+    </main>
 
     <footer>
       {% include 'home/footer.html' %}
