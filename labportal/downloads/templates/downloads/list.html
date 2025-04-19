@@ -1,0 +1,121 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Downloads | Home {% endblock %}
+
+{% block content %}
+<!-- Download section start -->
+<section id="downloads">
+    <div class="container">
+        <h2>Downloads</h2>
+
+        {% if breadcrumbs %}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/downloads/">Home</a></li>
+                {% for name, path in breadcrumbs %}
+                    <li class="breadcrumb-item"><a href="/downloads/{{ path }}">{{ name }}</a></li>
+                {% endfor %}
+            </ol>
+        </nav>
+        {% endif %}       
+
+        <!-- 🔍 Search Bar -->
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search files or folders...">
+        </div>
+
+        <!-- 📋 Downloads Table -->
+        <table class="table table-hover" id="downloadsTable">
+            <thead>
+                <tr>
+                    <th class="sortable">Name</th>
+                    <th class="sortable">Type</th>
+                    <th class="sortable">Size</th>
+                    <th class="sortable">Last Modified</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>
+                        {% if entry.is_dir %}
+                            📁
+                        {% else %}
+                            📄
+                        {% endif %}
+                        {{ entry.name }}
+                    </td>
+                    <td>
+                        {% if entry.is_dir %}Folder{% else %}File{% endif %}
+                    </td>
+                    <td>
+                        {% if not entry.is_dir %}
+                            {{ entry.size|filesizeformat }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td>{{ entry.modified|date:"Y-m-d H:i:s" }}</td>
+                    <td>
+                        {% if entry.is_dir %}
+                            <a href="{{ entry.link }}" class="btn btn-outline-primary btn-sm">Open</a>
+                        {% else %}
+                            <a href="{{ entry.link }}" class="btn btn-primary btn-sm">Download</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- Download section end -->
+
+<!-- 🔧 JavaScript for Search + Sort -->
+<script>
+    // 🔍 Search
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#downloadsTable tbody tr");
+        rows.forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+        });
+    });
+
+    // ⬆⬇ Sort
+    document.querySelectorAll("th.sortable").forEach((header, columnIndex) => {
+        header.addEventListener("click", () => {
+            const table = header.closest("table");
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const ascending = header.classList.toggle("asc");
+
+            rows.sort((a, b) => {
+                let aText = a.children[columnIndex].innerText.trim();
+                let bText = b.children[columnIndex].innerText.trim();
+
+                // Convert size to numbers if sorting size column
+                if (columnIndex === 2) {
+                    const parseSize = (s) => {
+                        let num = parseFloat(s);
+                        if (s.includes("GB")) return num * 1024;
+                        if (s.includes("MB")) return num;
+                        if (s.includes("KB")) return num / 1024;
+                        return 0;
+                    };
+                    aText = parseSize(aText);
+                    bText = parseSize(bText);
+                }
+
+                return ascending
+                    ? aText.localeCompare(bText, undefined, {numeric: true})
+                    : bText.localeCompare(aText, undefined, {numeric: true});
+            });
+
+            rows.forEach(row => tbody.appendChild(row)); // Reorder table
+        });
+    });
+</script>
+{% endblock %}
