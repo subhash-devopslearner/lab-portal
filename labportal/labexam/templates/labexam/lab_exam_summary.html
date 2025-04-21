@@ -1,0 +1,145 @@
+{% extends 'labexam/base.html' %}
+
+{% block title %}Summary | Lab Exam{% endblock %}
+
+{% block content %}
+<section id="labexam-summary">
+    <div class="container-lg">
+        <!-- Display the summary of students grouped by lab_name -->
+        <h2>Summary by Lab Name</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Lab Name</th>
+                    <th class="text-center">Student Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in lab_summary %}
+                <tr>
+                    <td class="text-center">{{ entry.date }}</td>
+                    <td class="text-center">{{ entry.lab_name }}</td>
+                    <td class="text-center">{{ entry.student_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>            
+        </table>
+
+        <h2 class="mt-5">All Lab Exam Records</h2>
+        <table class="table table-bordered table-striped table-hover mt-3" id="labExamTable">            
+            <thead class="table-light">
+                <tr>                                       
+                    <th class="text-center">
+                        Roll Number
+                        <button class="btn btn-sm btn-outline-secondary sort-btn" data-column="0" data-order="asc">↑</button>
+                        <button class="btn btn-sm btn-outline-secondary sort-btn" data-column="0" data-order="desc">↓</button>
+                    </th class="text-center">
+                    <th class="text-center">
+                        SAP ID
+                        <button class="btn btn-sm btn-outline-secondary sort-btn" data-column="1" data-order="asc">↑</button>
+                        <button class="btn btn-sm btn-outline-secondary sort-btn" data-column="1" data-order="desc">↓</button>
+                    </th class="text-center">
+                    <th class="text-center">First Name</th>
+                    <th class="text-center">Last Name</th>
+                    <th class="text-center">Lab Name</th>
+                    <th class="text-center">Program</th>
+                    <th class="text-center">Branch</th>
+                    <th class="text-center">File 1</th>
+                    <th class="text-center">File 2</th>
+                    <th class="text-center">File 3</th>
+                    <th class="text-center">File 4</th>
+                    <th class="text-center">File 5</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in lab_exams %}
+                <tr>                    
+                    <td class="text-center">{{ exam.roll_number }}</td>
+                    <td class="text-center">{{ exam.sap_id }}</td>
+                    <td class="text-center">{{ exam.student_first_name }}</td>
+                    <td class="text-center">{{ exam.student_last_name }}</td>
+                    <td class="text-center">{{ exam.lab_name }}</td>
+                    <td class="text-center">{{ exam.program }}</td>
+                    <td class="text-center">{{ exam.branch }}</td>
+                    <td class="text-center">
+                        {% if exam.file1_upload %}
+                        <a href="{{ exam.file1_upload.url }}" target="_blank">Download</a>
+                        {% else %}
+                        No File
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if exam.file2_upload %}
+                        <a href="{{ exam.file2_upload.url }}" target="_blank">Download</a>
+                        {% else %}
+                        No File
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if exam.file3_upload %}
+                        <a href="{{ exam.file3_upload.url }}" target="_blank">Download</a>
+                        {% else %}
+                        No File
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if exam.file4_upload %}
+                        <a href="{{ exam.file4_upload.url }}" target="_blank">Download</a>
+                        {% else %}
+                        No File
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if exam.file5_upload %}
+                        <a href="{{ exam.file5_upload.url }}" target="_blank">Download</a>
+                        {% else %}
+                        No File
+                        {% endif %}
+                    </td>
+                    <td class="text-center">{{ exam.date }}</td>
+                    <td class="text-center">{{ exam.time }}</td>                    
+                </tr>
+                {% endfor %}
+            </tbody>            
+        </table>
+    </div>
+</section>
+
+<!-- JavaScript for Sorting -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const table = document.getElementById('labExamTable');
+        const headers = table.querySelectorAll('.sort-btn');
+
+        headers.forEach(header => {
+            header.addEventListener('click', function () {
+                const column = this.getAttribute('data-column');
+                const order = this.getAttribute('data-order');
+                const rows = Array.from(table.querySelector('tbody').rows);
+
+                rows.sort((a, b) => {
+                    const cellA = a.cells[column].innerText.trim();
+                    const cellB = b.cells[column].innerText.trim();
+
+                    if (!isNaN(cellA) && !isNaN(cellB)) {
+                        // Numeric comparison
+                        return order === 'asc' ? cellA - cellB : cellB - cellA;
+                    } else {
+                        // String comparison
+                        return order === 'asc'
+                            ? cellA.localeCompare(cellB)
+                            : cellB.localeCompare(cellA);
+                    }
+                });
+
+                // Append sorted rows back to the table body
+                const tbody = table.querySelector('tbody');
+                rows.forEach(row => tbody.appendChild(row));
+            });
+        });
+    });
+</script>
+{% endblock %}
