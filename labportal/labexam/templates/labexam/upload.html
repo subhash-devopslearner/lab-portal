@@ -1,0 +1,87 @@
+{% extends 'labexam/base.html' %}
+
+{% block title %}Submission | Lab Exam{% endblock %}
+
+{% block content %}
+<section id="labexam-upload">
+    <div class="container-lg">
+        <h2>Lab Exam Submission</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--
+            {{ form.as_p }}
+            <div class="mt-4 mb-2 text-center">
+                <button class="btn btn-primary form-control mt-2 mb-2 px-5"
+                    type="submit">Submit</button>
+            </div>
+            -->          
+            
+            <!-- Render specific fields manually -->
+            <div class="mb-3">
+                {{ form.student_first_name.label_tag }}
+                {{ form.student_first_name }}
+            </div>
+            <div class="mb-3">
+                {{ form.student_last_name.label_tag }}
+                {{ form.student_last_name }}
+            </div>
+            <div class="mb-3">
+                {{ form.lab_name.label_tag }}
+                {{ form.lab_name }}
+            </div>
+            <div class="mb-3">
+                {{ form.program.label_tag }}
+                {{ form.program }}
+            </div>
+            <div class="mb-3">
+                {{ form.branch.label_tag }}
+                {{ form.branch }}
+            </div>
+            <div class="mb-3">
+                {{ form.sap_id.label_tag }}
+                {{ form.sap_id }}
+            </div>
+            <div class="mb-3">
+                {{ form.roll_number.label_tag }}
+                {{ form.roll_number }}
+            </div>
+
+            <!-- File 1 Upload (Mandatory) -->
+            <div class="mb-3">
+                {{ form.file1_upload.label_tag }}
+                {{ form.file1_upload }}
+            </div>
+
+            <!-- Optional File Upload Fields (Hidden by Default) -->
+            <details>
+                <summary class="btn btn-outline-primary mb-3">Add Optional Files</summary>
+                <div id="optional-files" class="mt-3">
+                    <div class="mb-3">
+                        {{ form.file2_upload.label_tag }}
+                        {{ form.file2_upload }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.file3_upload.label_tag }}
+                        {{ form.file3_upload }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.file4_upload.label_tag }}
+                        {{ form.file4_upload }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.file5_upload.label_tag }}
+                        {{ form.file5_upload }}
+                    </div>
+                </div>
+            </details>
+
+            <!-- Submit Button -->
+            <div class="mt-4 mb-2 text-center">
+                <button class="btn btn-primary form-control mt-2 mb-2 px-5" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>    
+{% endblock %}    
+</body>
+</html>
