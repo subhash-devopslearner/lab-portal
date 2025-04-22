@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'labexam',
     'downloads',
     'experiments',      
     'home',
