@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name ip_address or fqdn;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /var/www/labportal;
+    }
+
+    location /sw-dumps/ {
+        alias /var/www/labportal/sw-dumps/;
+        autoindex off;
+        add_header Content-Disposition "attachment";
+    } 
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}

@@ -8,7 +8,12 @@
     <h2>Experiment Lists</h2>
     <form method="get">
       {{ search_form.as_p }}
-      <button type="submit">Search</button>
+
+      <!-- Search Button -->
+      <div class="mt-4 mb-2 text-center">
+        <button class="btn btn-primary form-control mt-2 mb-2 px-5" type="submit">Search</button>
+      </div>
+
     </form>
   </div>
 </section>
@@ -17,24 +22,24 @@
   <div class="container-lg">
     <div class="row justify-content-center align-items-center">
       <div class="col text-center text-md-start">
-        <table class="table table-hover border">
-          <thead>
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="table-light">
             <tr>
-              <th scope="col">AY</th>
-              <th scope="col">SEMESTER</th>
-              <th scope="col">SUBJECT</th>
-              <th scope="col">EXPERIMENT NO</th>
-              <th scope="col">ATTACHMENT</th>
+              <th class="text-center">AY</th>
+              <th class="text-center">SEMESTER</th>
+              <th class="text-center">SUBJECT</th>
+              <th class="text-center">EXPERIMENT NO</th>
+              <th class="text-center">Download</th>
             </tr>
           </thead>
           <tbody>
             {% for experiment in experiments %}
             <tr>
-              <td scope="row">{{experiment.academic_year.year}}</td>
-              <td scope="row">{{experiment.semester.name}}</td>
-              <td scope="row">{{experiment.subject.name}}</td>
-              <td scope="row">{{experiment.experiment_number}}</td>
-              <td scope="row"><a href="{{ experiment.file.url }}">Download</a></td>
+              <td class="text-center">{{experiment.academic_year.year}}</td>
+              <td class="text-center">{{experiment.semester.name}}</td>
+              <td class="text-center">{{experiment.subject.name}}</td>
+              <td class="text-center">{{experiment.experiment_number}}</td>
+              <td class="text-center"><a href="{{ experiment.file.url }}">Download</a></td>
             </tr>
             {% endfor %}
           </tbody>
