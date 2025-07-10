@@ -25,6 +25,7 @@ urlpatterns = [
     path('experiments/', include('experiments.urls')),   
     path('downloads/', include('downloads.urls')),
     path('labexam/', include('labexam.urls')),
+    path('users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
