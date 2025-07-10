@@ -1,36 +1,47 @@
+<!-- templates/navigation.html -->
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container">
-    <a class="navbar-brand" href="{% url '' %}">LAB PORTAL</a>
+    <a class="navbar-brand" href="{% url 'home' %}">LAB PORTAL</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="{% url '' %}">Home
-            <span class="visually-hidden">(current)</span>
-          </a>
+          <a class="nav-link active" href="{% url 'home' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{% url 'home_experiments' %}">Experiments
-            <span class="visually-hidden">(current)</span>
-          </a>
+          <a class="nav-link active" href="{% url 'home_experiments' %}">Experiments</a>
         </li>                
         <li class="nav-item">
-          <a class="nav-link active" href="/downloads/">Downloads
-            <span class="visually-hidden">(current)</span>
-          </a>
+          <a class="nav-link active" href="/downloads/">Downloads</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link active" href="{% url 'labexam_upload' %}">Labexam-upload
-            <span class="visually-hidden">(current)</span>
-          </a>
+          <a class="nav-link active" href="{% url 'labexam_upload' %}">Labexam Upload</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+
+      <!-- 🔒 AUTH SECTION -->
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item d-flex align-items-center me-3 text-white">
+            Welcome, {{ user.first_name|title }} {{ user.last_name|title }}
+          </li>
+          <!-- <li class="nav-item">
+            <a class="btn btn-outline-light" href="{% url 'logout' %}">Logout</a>
+          </li> -->
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light">Logout</button>
+          </form>
+        {% else %}
+          <li class="nav-item">
+            <a class="btn btn-light" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
+      </ul>
+      <!-- 🔒 AUTH SECTION END -->      
     </div>
   </div>
 </nav>
