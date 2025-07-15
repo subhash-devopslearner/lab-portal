@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=subhash
+Group=www-data
+WorkingDirectory=/home/subhash/lab-portal/labportal
+ExecStart=/home/subhash/lab-portal/myprojectenv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          labportal.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
