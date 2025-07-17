@@ -10,7 +10,7 @@ def register_student(request):
         form = StudentRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Registration successful! Please log in.")
+            messages.success(request, "Registration successful! Username would be firstname.lastname. Please log in.")
             return redirect('login')
     else:
         form = StudentRegistrationForm()

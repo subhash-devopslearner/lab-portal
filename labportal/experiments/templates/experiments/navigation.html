@@ -7,12 +7,17 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">        
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home_experiments' %}">Home  
+          <a class="nav-link" href="{% url 'home' %}">Home  
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
 
         {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home_experiments' %}">Experiments
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'upload_experiment' %}">Upload Experiment</a>
         </li>
