@@ -7,7 +7,7 @@
   <div class="container-lg">
     <h2>Experiment Lists</h2>
     <form method="get">
-      {{ search_form.as_p }}      
+      {{ search_form.as_p }}
       <!-- Search Button -->
       <div class="mt-4 mb-2 text-center">
         <button class="btn btn-primary form-control mt-2 mb-2 px-5" type="submit">Search</button>
@@ -27,7 +27,12 @@
               <th class="text-center">SEMESTER</th>
               <th class="text-center">SUBJECT</th>
               <th class="text-center">EXPERIMENT NO</th>
-              <th class="text-center">Download</th>
+              <th class="text-center">PART A</th>
+              <th class="text-center">PART B</th>
+              <th class="text-center">EXTRA</th>
+              {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
+              <th class="text-center">Solution</th>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -37,7 +42,33 @@
               <td class="text-center">{{experiment.semester.name}}</td>
               <td class="text-center">{{experiment.subject.name}}</td>
               <td class="text-center">{{experiment.experiment_number}}</td>
-              <td class="text-center"><a href="{{ experiment.file.url }}">Download</a></td>
+              <td class="text-center"><a target="_blank" href="{{ experiment.file1_upload.url }}">Download</a></td>              
+
+              <td class="text-center">
+                {% if experiment.file2_upload %}
+                <a target="_blank" href="{{ experiment.file2_upload.url }}">Download</a>
+                {% else %}
+                <span class="text-muted">Not Uploaded</span>
+                {% endif %}
+              </td>
+
+              <td class="text-center">
+                {% if experiment.file3_upload %}
+                <a target="_blank" href="{{ experiment.file3_upload.url }}">Download</a>
+                {% else %}
+                <span class="text-muted">Not Uploaded</span>
+                {% endif %}
+              </td>
+
+              {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
+              <td class="text-center">
+                {% if experiment.file4_upload %}
+                <a target="_blank" href="{{ experiment.file4_upload.url }}">Download</a>
+                {% else %}
+                <span class="text-muted">Not Uploaded</span>
+                {% endif %}
+              </td>        
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
