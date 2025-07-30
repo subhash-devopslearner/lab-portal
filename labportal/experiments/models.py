@@ -22,7 +22,7 @@ class Subject(models.Model):
     def __str__(self):
         return f"{self.code} - {self.name}"
 
-class Programme(models.Model):
+class Program(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -30,13 +30,13 @@ class Programme(models.Model):
     
 def experiment_upload_path(instance, filename):        
     # Define the storage path    
-    return f'experiments/{instance.academic_year}/{instance.programme}/{instance.semester}/{instance.subject}/{instance.experiment_number}-{filename}'
+    return f'experiments/{instance.academic_year}/{instance.program}/{instance.semester}/{instance.subject}/{instance.experiment_number}/{filename}'
 
 class Experiment(models.Model):
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
     experiment_number = models.PositiveIntegerField()
     file1_upload = models.FileField(upload_to=experiment_upload_path, max_length=300)  # Adjust path dynamically
     file2_upload = models.FileField(upload_to=experiment_upload_path, max_length=300, blank=True, null=True)
@@ -45,8 +45,14 @@ class Experiment(models.Model):
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
+    class Meta:        
         ordering = ["uploaded_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["academic_year", "program", "semester", "subject", "experiment_number"],
+                name="unique_experiment_per_context"
+            )
+        ]
 
     def __str__(self):
-        return f"Exp {self.experiment_number} - {self.subject.name} ({self.academic_year.year})"
+        return f"{self.academic_year.year} - {self.program.name} - {self.semester.name} - {self.subject.name} - Exp - {self.experiment_number}"

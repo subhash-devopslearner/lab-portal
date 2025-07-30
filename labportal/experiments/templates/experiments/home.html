@@ -9,14 +9,12 @@
     <form method="get">
       {{ search_form.as_p }}
       <!-- Search Button -->
-      <div class="mt-4 mb-2 text-center">
+      <div class="mt-4 mb-4 text-center">
         <button class="btn btn-primary form-control mt-2 mb-2 px-5" type="submit">Search</button>
       </div>
     </form>
   </div>
-</section>
 
-<section id="exp-lists">
   <div class="container-lg">
     <div class="row justify-content-center align-items-center">
       <div class="col text-center text-md-start">
@@ -24,8 +22,9 @@
           <thead class="table-light">
             <tr>
               <th class="text-center">AY</th>
+              <th class="text-center">PROGRAM</th>              
               <th class="text-center">SEMESTER</th>
-              <th class="text-center">SUBJECT</th>
+              <th class="text-center">SUBJECT</th>                            
               <th class="text-center">EXPERIMENT NO</th>
               <th class="text-center">PART A</th>
               <th class="text-center">PART B</th>
@@ -39,8 +38,9 @@
             {% for experiment in experiments %}
             <tr>
               <td class="text-center">{{experiment.academic_year.year}}</td>
-              <td class="text-center">{{experiment.semester.name}}</td>
-              <td class="text-center">{{experiment.subject.name}}</td>
+              <td class="text-center">{{experiment.program.name}}</td>
+              <td class="text-center">{{experiment.semester.name}}</td>            
+              <td class="text-center">{{experiment.subject.name}}</td>              
               <td class="text-center">{{experiment.experiment_number}}</td>
               <td class="text-center"><a target="_blank" href="{{ experiment.file1_upload.url }}">Download</a></td>              
 
