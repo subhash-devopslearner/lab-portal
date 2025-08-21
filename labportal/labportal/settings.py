@@ -17,7 +17,7 @@ from decouple import config, Csv, RepositoryEnv, Config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Dynamically load .env based on environment
-env_path = os.path.join(BASE_DIR, f'.env.{os.getenv("ENV", "local")}')
+env_path = os.path.join(BASE_DIR, f'.env.{os.getenv("ENV", "production")}')
 config = Config(RepositoryEnv(env_path))
 
 ENV = config('ENV', default='production')
@@ -174,6 +174,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = 'media/'
 
 # The absolute path to the directory where media files will be collected
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = 'media'
 
 # Default primary key field type

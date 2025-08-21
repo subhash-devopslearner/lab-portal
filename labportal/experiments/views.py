@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 #Create your views here.
 def home_experiments(request):   
     
-    experiments = Experiment.objects.all()
+    experiments = Experiment.objects.all().order_by('academic_year__year','semester__name','subject__name','program__name', 'experiment_number')
     
     search_form = ExperimentSearchForm(request.GET or None)
     if search_form.is_valid():
