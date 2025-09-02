@@ -45,7 +45,9 @@ class ExperimentUploadForm(forms.ModelForm):
             'file1_upload',
             'file2_upload',
             'file3_upload',
-            'file4_upload',            
+            'file4_upload',
+            'file5_upload',
+            'file6_upload',            
         ]
         widgets = {
             'academic_year': forms.Select(attrs={'class': 'form-control'}),
@@ -57,13 +59,17 @@ class ExperimentUploadForm(forms.ModelForm):
             'file2_upload': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'file3_upload': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'file4_upload': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'file5_upload': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'file6_upload': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
             'file1_upload': 'Part A (Mandatory)',
             'file2_upload': 'Part B (Optional)',
-            'file3_upload': 'Extra File (Optional)',
-            'file4_upload': 'Solution File (Optional)',            
+            'file3_upload': 'Experiment List (Optional)',
+            'file4_upload': 'Course Policy (Optional)',
+            'file5_upload': 'Extra File (Optional)',
+            'file6_upload': 'Solution File (Optional)',            
         }
 
 def clean(self):
@@ -71,10 +77,12 @@ def clean(self):
 
     # Define allowed extensions per field
     allowed_extensions_map = {
-        'file1_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx'],
-        'file2_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx'],
-        'file3_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx'],
-        'file4_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.zip', '.rar'],
+        'file1_upload': ['.pdf', '.doc', '.docx'],
+        'file2_upload': ['.pdf', '.doc', '.docx'],
+        'file3_upload': ['.pdf', '.doc', '.docx'],
+        'file4_upload': ['.pdf', '.doc', '.docx'],
+        'file5_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.zip', '.rar'],
+        'file6_upload': ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', '.zip', '.rar'],
     }
 
     # Define max size per field (in bytes)
@@ -82,7 +90,9 @@ def clean(self):
         'file1_upload': 5 * 1024 * 1024,   # 5 MB
         'file2_upload': 5 * 1024 * 1024,
         'file3_upload': 5 * 1024 * 1024,
-        'file4_upload': 25 * 1024 * 1024,  # 25 MB
+        'file4_upload': 5 * 1024 * 1024,
+        'file5_upload': 25 * 1024 * 1024,  # 25 MB
+        'file6_upload': 25 * 1024 * 1024        
     }
 
     for field_name, allowed_extensions in allowed_extensions_map.items():
@@ -99,18 +109,4 @@ def clean(self):
                     field_name,
                     f"File size must be under {max_size_map[field_name] // (1024 * 1024)} MB."
                 )
-
-
-# def clean(self):
-#         cleaned_data = super().clean()
-#         allowed_extensions = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx']
-#         max_size = 5 * 1024 * 1024  # 5 MB
-
-#         for field_name in ['file1_upload', 'file2_upload', 'file3_upload', 'file4_upload']:
-#             file = cleaned_data.get(field_name)
-#             if file:
-#                 ext = os.path.splitext(file.name)[1].lower()
-#                 if ext not in allowed_extensions:
-#                     self.add_error(field_name, "Only PDF, DOC, DOCX, PPT, PPTX, XLS and XLSX files are allowed.")
-#                 if file.size > max_size:
-#                     self.add_error(field_name, "File size must be under 5 MB.")
+                

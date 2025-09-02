@@ -18,61 +18,81 @@
   <div class="container-lg">
     <div class="row justify-content-center align-items-center">
       <div class="col text-center text-md-start">
-        <table class="table table-bordered table-striped table-hover">
-          <thead class="table-light">
-            <tr>
-              <th class="text-center">AY</th>
-              <th class="text-center">PROGRAM</th>              
-              <th class="text-center">SEMESTER</th>
-              <th class="text-center">SUBJECT</th>                            
-              <th class="text-center">EXPERIMENT NO</th>
-              <th class="text-center">PART A</th>
-              <th class="text-center">PART B</th>
-              <th class="text-center">EXTRA</th>
-              {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
-              <th class="text-center">Solution</th>
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for experiment in experiments %}
-            <tr>
-              <td class="text-center">{{experiment.academic_year.year}}</td>
-              <td class="text-center">{{experiment.program.name}}</td>
-              <td class="text-center">{{experiment.semester.name}}</td>            
-              <td class="text-center">{{experiment.subject.name}}</td>              
-              <td class="text-center">{{experiment.experiment_number}}</td>
-              <td class="text-center"><a target="_blank" href="{{ experiment.file1_upload.url }}">Download</a></td>              
-
-              <td class="text-center">
-                {% if experiment.file2_upload %}
-                <a target="_blank" href="{{ experiment.file2_upload.url }}">Download</a>
-                {% else %}
-                <span class="text-muted">Not Uploaded</span>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="table-light">
+              <tr>
+                <th class="text-center">AY</th>
+                <th class="text-center">PROGRAM</th>
+                <th class="text-center">SEM</th>
+                <th class="text-center">SUBJECT</th>
+                <th class="text-center">EXP NO</th>
+                <th class="text-center">PART A</th>
+                <th class="text-center">PART B</th>
+                <th class="text-center">EXP LIST</th>
+                <th class="text-center">COURSE POLICY</th>
+                <th class="text-center">EXTRA</th>
+                {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
+                <th class="text-center">SOLUTION</th>
                 {% endif %}
-              </td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for experiment in experiments %}
+              <tr>
+                <td class="text-center">{{experiment.academic_year.year}}</td>
+                <td class="text-center">{{experiment.program.name}}</td>
+                <td class="text-center">{{experiment.semester.name}}</td>
+                <td class="text-center">{{experiment.subject.code}}</td>
+                <td class="text-center">{{experiment.experiment_number}}</td>
+                <td class="text-center"><a target="_blank" href="{{ experiment.file1_upload.url }}">Download</a></td>
 
-              <td class="text-center">
-                {% if experiment.file3_upload %}
-                <a target="_blank" href="{{ experiment.file3_upload.url }}">Download</a>
-                {% else %}
-                <span class="text-muted">Not Uploaded</span>
-                {% endif %}
-              </td>
+                <td class="text-center">
+                  {% if experiment.file2_upload %}
+                  <a target="_blank" href="{{ experiment.file2_upload.url }}">Download</a>
+                  {% else %}
+                  <span class="text-muted">Not Uploaded</span>
+                  {% endif %}
+                </td>
 
-              {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
-              <td class="text-center">
-                {% if experiment.file4_upload %}
-                <a target="_blank" href="{{ experiment.file4_upload.url }}">Download</a>
-                {% else %}
-                <span class="text-muted">Not Uploaded</span>
+                <td class="text-center">
+                  {% if experiment.file3_upload %}
+                  <a target="_blank" href="{{ experiment.file3_upload.url }}">Download</a>
+                  {% else %}
+                  <span class="text-muted">Not Uploaded</span>
+                  {% endif %}
+                </td>
+
+                <td class="text-center">
+                  {% if experiment.file4_upload %}
+                  <a target="_blank" href="{{ experiment.file4_upload.url }}">Download</a>
+                  {% else %}
+                  <span class="text-muted">Not Uploaded</span>
+                  {% endif %}
+                </td>
+
+                <td class="text-center">
+                  {% if experiment.file5_upload %}
+                  <a target="_blank" href="{{ experiment.file5_upload.url }}">Download</a>
+                  {% else %}
+                  <span class="text-muted">Not Uploaded</span>
+                  {% endif %}
+                </td>
+
+                {% if user.is_authenticated and user.role in "teacher lab_assistant" %}
+                <td class="text-center">
+                  {% if experiment.file4_upload %}
+                  <a target="_blank" href="{{ experiment.file4_upload.url }}">Download</a>
+                  {% else %}
+                  <span class="text-muted">Not Uploaded</span>
+                  {% endif %}
+                </td>
                 {% endif %}
-              </td>        
-              {% endif %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
