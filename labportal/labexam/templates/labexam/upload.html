@@ -4,8 +4,8 @@
 
 {% block content %}
 <section id="labexam-upload">
-    <div class="container-lg">
-        <h2>Lab Exam Submission</h2>
+    <div class="container-lg">       
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <!--
@@ -14,8 +14,8 @@
                 <button class="btn btn-primary form-control mt-2 mb-2 px-5"
                     type="submit">Submit</button>
             </div>
-            -->          
-            
+            -->
+
             <!-- Render specific fields manually -->
             <div class="mb-3">
                 {{ form.student_first_name.label_tag }}
@@ -81,7 +81,7 @@
             </div>
         </form>
     </div>
-</section>    
-{% endblock %}    
+</section>
+{% endblock %}
 </body>
 </html>

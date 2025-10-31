@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.db import IntegrityError
 from .models import LabExam
 from .forms import LabExamForm
-
+from django.contrib import messages
 
 def labexam_upload(request):
     if request.method == "POST":
@@ -11,12 +11,33 @@ def labexam_upload(request):
         if form.is_valid():
             try:
                 form.save()
+                messages.success(request, "File(s) uploaded successfully!")  # success message
                 return redirect('success')
             except IntegrityError:
-                form.add_error(None, 'A record for this SAP ID already exists for the selected date.')
+                messages.error(request, "A record for this SAP ID already exists for the selected date.")
+        else:
+            # Show validation errors from the form
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
     else:
         form = LabExamForm()
     return render(request, 'labexam/upload.html', {'form': form})
+
+
+
+# def labexam_upload(request):
+#     if request.method == "POST":
+#         form = LabExamForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             try:
+#                 form.save()
+#                 return redirect('success')
+#             except IntegrityError:
+#                 form.add_error(None, 'A record for this SAP ID already exists for the selected date.')
+#     else:
+#         form = LabExamForm()
+#     return render(request, 'labexam/upload.html', {'form': form})
 
 def success_view(request):
     return render(request, 'labexam/success.html')

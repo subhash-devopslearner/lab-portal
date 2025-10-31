@@ -2,6 +2,8 @@
 from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
+import re
+import os
 
 class AcademicYear(models.Model):
     year = models.CharField(max_length=7, unique=True)  # e.g., "2023-24"
@@ -27,11 +29,32 @@ class Subject(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
+   
+
+def slugify_name(value):
+    """Convert text to lowercase, replace spaces/underscores/dashes with a single '-'."""
+    value = value.lower()
+    # Replace any sequence of non-alphanumeric (including spaces, underscores, dashes) with '-'
+    value = re.sub(r'[^a-z0-9]+', '-', value)
+    # Remove leading/trailing '-'
+    return value.strip('-')
+
+def experiment_upload_path(instance, filename):
+    # Get base name and extension separately
+    base, ext = os.path.splitext(filename)
     
-    
-def experiment_upload_path(instance, filename):        
-    # Define the storage path    
-    return f'experiments/{instance.academic_year}/{instance.program.lower()}/sem-{instance.semester}/{instance.subject}/exp-{instance.experiment_number}/{filename}'
+    return (
+        f"experiments/{slugify_name(instance.academic_year.year)}/"
+        f"{slugify_name(instance.program.name)}/"
+        f"sem-{slugify_name(instance.semester.name)}/"
+        f"{slugify_name(instance.subject.code)}/"
+        f"exp-{instance.experiment_number}/{slugify_name(base)}{ext.lower()}"
+    )   
+
+
+# def experiment_upload_path(instance, filename):        
+#     # Define the storage path    
+#     return f'experiments/{instance.academic_year}/{instance.program.lower()}/sem-{instance.semester}/{instance.subject}/exp-{instance.experiment_number}/{filename}'
 
 class Experiment(models.Model):
     academic_year = models.ForeignKey(AcademicYear, on_delete=models.CASCADE)

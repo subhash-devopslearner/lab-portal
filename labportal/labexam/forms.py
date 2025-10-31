@@ -3,7 +3,7 @@ from .models import LabExam
 from django.core.exceptions import ValidationError
 
 class LabExamForm(forms.ModelForm):
-    MAX_FILE_SIZE_MB = 5  # Set the maximum file size in MB
+    MAX_FILE_SIZE_MB = 10  # Set the maximum file size in MB
 
     class Meta:
         model = LabExam
@@ -29,11 +29,16 @@ class LabExamForm(forms.ModelForm):
             'branch': 'Branch',
             'sap_id': 'SAP ID',
             'roll_number': 'Roll Number',
-            'file1_upload': 'File 1 Upload (Mandatory)',
-            'file2_upload': 'File 2 Upload (Optional)',
-            'file3_upload': 'File 3 Upload (Optional)',
-            'file4_upload': 'File 4 Upload (Optional)',
-            'file5_upload': 'File 5 Upload (Optional)',
+            # 'file1_upload': 'File 1 Upload (Mandatory)',
+            # 'file2_upload': 'File 2 Upload (Optional)',
+            # 'file3_upload': 'File 3 Upload (Optional)',
+            # 'file4_upload': 'File 4 Upload (Optional)',
+            # 'file5_upload': 'File 5 Upload (Optional)',
+            'file1_upload': 'File 1:  PDF file only (Mandatory)',
+            'file2_upload': 'File 2:  PDF file only (Optional)',
+            'file3_upload': 'File 3:  DWG file only (Optional)',
+            'file4_upload': 'File 4:  DWG file only (Optional)',
+            'file5_upload': 'File 5:  ZIP file only (Optional)',
         }
         widgets = {
             'student_first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter First Name'}),
@@ -85,23 +90,23 @@ class LabExamForm(forms.ModelForm):
     def clean_file3_upload(self):
         file3 = self.cleaned_data.get('file3_upload')
         if file3:
-            if not file3.name.endswith('.pdf'):
-                raise forms.ValidationError("Only PDF files are allowed!")
+            if not file3.name.endswith('.dwg'):
+                raise forms.ValidationError("Only DWG files are allowed!")
             self.validate_file_size(file3)  # Validate file size            
         return file3
     
     def clean_file4_upload(self):
         file4 = self.cleaned_data.get('file4_upload')
         if file4:
-            if not file4.name.endswith('.pdf'):
-                raise forms.ValidationError("Only PDF files are allowed!")
+            if not file4.name.endswith('.dwg'):
+                raise forms.ValidationError("Only DWG files are allowed!")
             self.validate_file_size(file4)  # Validate file size            
         return file4
     
     def clean_file5_upload(self):
         file5 = self.cleaned_data.get('file5_upload')
         if file5:
-            if not file5.name.endswith('.pdf'):
-                raise forms.ValidationError("Only PDF files are allowed!")
+            if not file5.name.endswith('.zip'):
+                raise forms.ValidationError("Only ZIP files are allowed!")
             self.validate_file_size(file5)  # Validate file size            
         return file5

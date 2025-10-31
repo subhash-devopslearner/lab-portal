@@ -8,7 +8,7 @@ def labexam_upload_path(instance, filename):
     # Get current date in YYYY-MM-DD format
     current_date = datetime.now().strftime("%Y-%m-%d")
     # Define the storage path
-    return f'{current_date}/{instance.lab_name}/{instance.program}/{instance.branch}/{instance.student_first_name}-{instance.student_last_name}-{instance.sap_id}-{filename}'
+    return f'labexam/{current_date}/{instance.lab_name}/{instance.program}/{instance.branch}/{instance.student_first_name}-{instance.student_last_name}-{instance.sap_id}-{filename}'
 
 class LabExam(models.Model):
     PROGRAM_CHOICES = [
@@ -19,30 +19,31 @@ class LabExam(models.Model):
         ('CS', 'CS'),
         ('CE', 'CE'),
         ('IT', 'IT'),
-        ('AIML', 'AIML'),        
+        ('AIML', 'AIML'),
+        ('CS-DS', 'CS-DS'),
     ]
     LAB_CHOICES = [
         ('CC-I', 'CC-I'),
         ('CC-II', 'CC-II'),
         ('PL-I', 'PL-I'),
         ('DATABASE', 'DATABASE'),
-        ('PL-II', 'PL-II'),                
+        ('PL-II', 'PL-II'),
         ('PROJECT-I ', 'PROJECT-I'),
         ('DSP', 'DSP'),
         ('CN', 'CN'),
         ('SE', 'SE'),
         ('APL', 'APL'),
-        ('LANGUAGE', 'LANGUAGE'), 
+        ('LANGUAGE', 'LANGUAGE'),
         ('SP', 'SP'),
         ('ACN', 'ACN'),
         ('PROJECT-II', 'PROJECT-II'),
         ('SS', 'SS'),
         ('CAD', 'CAD'),
-        ('AIML', 'AIML'),           
+        ('AIML-Lab', 'AIML-Lab'),
     ]
-    
+
     student_first_name = models.CharField(max_length=50)
-    student_last_name = models.CharField(max_length=50)
+    student_last_name = models.CharField(max_length=50)    
     lab_name = models.CharField(max_length=50, choices=LAB_CHOICES)
     program = models.CharField(max_length=50, choices=PROGRAM_CHOICES)
     branch = models.CharField(max_length=50, choices=BRANCH_CHOICES)
@@ -76,4 +77,4 @@ class LabExam(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.student_name} - {self.roll_number}"
+        return f"{self.student_first_name} {self.student_last_name} - {self.sap_id}"
